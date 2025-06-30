@@ -7,6 +7,8 @@ djangorestframework
 # for environment variables:
 python-decouple == 3.8
 
+# For Phone numbers:
+django-phonenumber-field[phonenumbers]
 
 
 markdown 
