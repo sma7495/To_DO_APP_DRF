@@ -1,0 +1,23 @@
+asgiref > 3.8,<3.9
+Django > 4.2
+sqlparse ==0.5.3
+python-decouple == 3.8
+pillow
+djangorestframework
+markdown 
+django-filter  
+drf-yasg[validation]
+djangorestframework-simplejwt[crypto]
+django-mail-templated
+
+# reformating:
+black
+
+
+# backgroun proccess
+celery
+redis
+
+# for cahcing
+requests
+django-redis
