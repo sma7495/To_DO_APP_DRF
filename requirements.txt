@@ -1,9 +1,14 @@
 asgiref > 3.8,<3.9
 Django > 4.2
 sqlparse ==0.5.3
-python-decouple == 3.8
 pillow
 djangorestframework
+
+# for environment variables:
+python-decouple == 3.8
+
+
+
 markdown 
 django-filter  
 drf-yasg[validation]
