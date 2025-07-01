@@ -71,7 +71,7 @@ class Profile(models.Model):
     last_name = models.CharField(max_length=100)
     image = models.ImageField(upload_to="", blank=True, null=True)
     address = models.TextField()
-    phone = PhoneNumberField(unique=True)
+    phone = PhoneNumberField()
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
 

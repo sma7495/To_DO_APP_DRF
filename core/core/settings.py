@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'rest_framework',
     'drf_yasg',
+    "rest_framework.authtoken",
     
     'account',
     'task',
@@ -131,3 +132,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom User Model settings:
 AUTH_USER_MODEL = "account.User"
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        "rest_framework.authentication.TokenAuthentication",
+
+    ]
+}
