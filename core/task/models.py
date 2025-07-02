@@ -90,28 +90,34 @@ class Task(models.Model):
 def save_profile(sender, instance, created, **kwargs):
     sub_proj = SubProject.objects.get(title = instance.sub_project)
     related_tasks = Task.objects.filter(sub_project = sub_proj)
+    spending_time = 0
     status = "done"
     for tsk in related_tasks:
+        spending_time = spending_time + tsk.spending_time
         if tsk.status == "late":
             status = "late"
         elif tsk.status == "working" and status != "late":
             status = "working"
         elif tsk.status == "wait" and status != "working" and status != "late":
             status = "wait"
-    sub_proj.status = status    
+    sub_proj.status = status
+    sub_proj.spending_time = spending_time 
     sub_proj.save()
 
 @receiver(post_save, sender = SubProject)
 def save_profile(sender, instance, created, **kwargs):
     proj = Project.objects.get(title = instance.project)
     related_tasks = SubProject.objects.filter(project = proj)
+    spending_time = 0
     status = "done"
     for tsk in related_tasks:
+        spending_time = spending_time + tsk.spending_time
         if tsk.status == "late":
             status = "late"
         elif tsk.status == "working" and status != "late":
             status = "working"
         elif tsk.status == "wait" and status != "working" and status != "late":
             status = "wait"
-    proj.status = status    
+    proj.status = status
+    proj.spending_time = spending_time   
     proj.save()

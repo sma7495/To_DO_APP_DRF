@@ -40,6 +40,13 @@ class TaskSerializer(serializers.ModelSerializer):
         else:
             rep.pop("description")
         return rep
+    
+    def validate(self, attrs):
+        if attrs.get("start_time") >= attrs.get("dead_time"):
+            raise serializers.ValidationError({
+                'dead_time' : 'dead time must be greater than start time'
+            })
+        return super().validate(attrs)
 
 
 
@@ -64,6 +71,7 @@ class SubProjectSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
            'status',
+           'spending_time',
         ]
     
     def get_absolute_url(self, obj):
@@ -84,6 +92,13 @@ class SubProjectSerializer(serializers.ModelSerializer):
         else:
             rep.pop("description")
         return rep
+    
+    def validate(self, attrs):
+        if attrs.get("start_time") >= attrs.get("dead_time"):
+            raise serializers.ValidationError({
+                'dead_time' : 'dead time must be greater than start time'
+            })
+        return super().validate(attrs)
 
 
 
@@ -107,6 +122,8 @@ class ProjectSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
            'status',
+           'spending_time',
+
         ]
     
     def get_absolute_url(self, obj):
@@ -122,3 +139,10 @@ class ProjectSerializer(serializers.ModelSerializer):
         else:
             rep.pop("description")
         return rep
+    
+    def validate(self, attrs):
+        if attrs.get("start_time") >= attrs.get("dead_time"):
+            raise serializers.ValidationError({
+                'dead_time' : 'dead time must be greater than start time'
+            })
+        return super().validate(attrs)
