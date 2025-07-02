@@ -1,7 +1,8 @@
 from rest_framework.generics import GenericAPIView
 from rest_framework.views import Response, status
+from rest_framework_simplejwt.views import TokenObtainPairView
 
-from .serializer import RegistrationSerializer
+from .serializer import RegistrationSerializer, CustomTokenObtainPairSerializer
 
 class RegistrationGenericAPIView(GenericAPIView):
     serializer_class = RegistrationSerializer
@@ -16,3 +17,7 @@ class RegistrationGenericAPIView(GenericAPIView):
             }, status= status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+    

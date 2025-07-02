@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'drf_yasg',
     "rest_framework.authtoken",
+    'rest_framework_simplejwt',
     
     'account',
     'task',
@@ -138,6 +139,24 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         "rest_framework.authentication.TokenAuthentication",
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
 
     ]
 }
+
+
+
+# SMTP4DEV settings:
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+# Host for sending e-mail. this Host is the docker service name 
+EMAIL_HOST = 'smtp4dev' 
+
+# Port for sending e-mail. email port tha declared in compose file
+EMAIL_PORT = 25 
+
+# Optional SMTP authentication information for EMAIL_HOST.
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
+EMAIL_USE_TLS = False

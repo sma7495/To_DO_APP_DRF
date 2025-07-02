@@ -14,9 +14,13 @@ python-decouple == 3.8
 # For Phone numbers:
 django-phonenumber-field[phonenumbers]
 
-
+# Documentation:
 drf-yasg[validation]
+
+# Authentications
 djangorestframework-simplejwt[crypto]
+
+
 django-mail-templated
 
 # reformating:
