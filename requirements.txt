@@ -20,7 +20,7 @@ drf-yasg[validation]
 # Authentications
 djangorestframework-simplejwt[crypto]
 
-
+# Sending email with HTML Template:
 django-mail-templated
 
 # reformating:
