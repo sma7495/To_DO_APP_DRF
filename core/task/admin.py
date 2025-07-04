@@ -18,7 +18,7 @@ class SubProjectAdmin(admin.ModelAdmin):
     
 
 class TaskAdmin(admin.ModelAdmin):
-    list_display = ("title", "status", "manager", "sub_project")
+    list_display = ("id","title", "status", "manager", "sub_project")
     list_filter = ("status","related_user")
     search_fields = ["title", "description"]
     summernote_fields = ("description",)
