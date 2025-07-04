@@ -29,21 +29,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         validated_data.pop("password1")
         return User.objects.create_user(**validated_data)
-
-class UserChangePasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(max_length=255, write_only=True)
-    password1 = serializers.CharField(max_length=255, write_only=True)
-    
-    def validate(self, attrs):
-        if attrs.get("password") != attrs.get("password1"):
-            raise serializers.ValidationError({"detail": "password doesnt match!"})
-        try:
-            validate_password(attrs.get("password"))
-        except exceptions.ValidationError as e:
-            raise serializers.ValidationError({"password": list(e.messages)})
-
-        return super().validate(attrs)
-    
     
 
 class CustomAuthTokenSerializer(serializers.Serializer):
@@ -92,16 +77,20 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 
 
 class ChangePasswordSerializer(serializers.Serializer):
-    password = serializers.CharField(max_length=256)
+    old_password = serializers.CharField(max_length=256)
     new_password = serializers.CharField(max_length=256)
+    new_password1 = serializers.CharField(max_length=256)
 
     def validate(self, attrs):
         data = super().validate(attrs)
-        if not self.context.get("request").user.check_password(attrs["password"]):
-            raise serializers.ValidationError({"detail": "password is incorect!"})
+        if attrs.get("new_password") != attrs.get("new_password1"):
+            raise serializers.ValidationError({"detail": "password doesnt match!"})
+        
+        if not self.context.get("request").user.check_password(attrs["old_password"]):
+            raise serializers.ValidationError({"detail": "old password is incorect!"})
         try:
             validate_password(attrs.get("new_password"))
         except exceptions.ValidationError as e:
-            raise serializers.ValidationError({"password": list(e.messages)})
+            raise serializers.ValidationError({"new_password": list(e.messages)})
 
         return super().validate(attrs)

@@ -15,7 +15,8 @@ python-decouple == 3.8
 django-phonenumber-field[phonenumbers]
 
 # Documentation:
-drf-yasg[validation]
+# drf-yasg[validation]
+drf-spectacular[sidecar]
 
 # Authentications
 djangorestframework-simplejwt[crypto]

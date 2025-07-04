@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'rest_framework',
     'drf_yasg',
+    'drf_spectacular',
+    'drf_spectacular_sidecar',
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'mail_templated',
@@ -142,12 +144,17 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.TokenAuthentication",
         'rest_framework_simplejwt.authentication.JWTAuthentication',
 
-    ]
+    ],
+    
+    
+    #Documentation
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 
 
 # SMTP4DEV settings:
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Host for sending e-mail. this Host is the docker service name 
@@ -161,3 +168,18 @@ EMAIL_HOST_USER = ''
 EMAIL_HOST_PASSWORD = ''
 
 EMAIL_USE_TLS = False
+
+
+
+# API Documentation:
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'TO_DO_APP',
+    'DESCRIPTION': 'This is a simple to do app with DRF',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    
+    'SWAGGER_UI_DIST': 'SIDECAR',  # shorthand to use the sidecar instead
+    'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
+    'REDOC_DIST': 'SIDECAR',
+
+}

@@ -8,7 +8,7 @@ from rest_framework_simplejwt.settings import api_settings
 from mail_templated import EmailMessage
 from django.contrib.auth import get_user_model
 
-from .serializer import RegistrationSerializer, CustomTokenObtainPairSerializer, UserChangePasswordSerializer
+from .serializer import RegistrationSerializer, CustomTokenObtainPairSerializer, ChangePasswordSerializer
 
 
 User = get_user_model()
@@ -83,14 +83,13 @@ class VerifyUserToken(GenericAPIView):
     
 
 class UserChangePassword(GenericAPIView):
-    serializer_class = UserChangePasswordSerializer
+    serializer_class = ChangePasswordSerializer
     permission_classes = [IsAuthenticated]
     
     def put(self, request, *args, **kwargs):
-        serializer = self.get_serializer_class()
-        serial = serializer(data = request.data)
+        serial = self.get_serializer(data = request.data)
         serial.is_valid(raise_exception=True)
-        new_pass = serializer.validated_data["password"]
+        new_pass = serial.validated_data["new_password"]
         self.request.user.set_password(new_pass)
         self.request.user.save()
         return Response({
