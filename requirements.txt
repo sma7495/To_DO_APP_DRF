@@ -14,10 +14,6 @@ python-decouple == 3.8
 # For Phone numbers:
 django-phonenumber-field[phonenumbers]
 
-
-# for clean up the unused image and media files
-django-cleanup
-
 # Documentation:
 # drf-yasg[validation]
 drf-spectacular[sidecar]
