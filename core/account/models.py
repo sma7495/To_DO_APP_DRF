@@ -69,7 +69,7 @@ class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to="", blank=True, null=True)
+    image = models.ImageField(upload_to="image/profile/", blank=True, null=True)
     address = models.TextField()
     phone = PhoneNumberField()
     created_date = models.DateTimeField(auto_now_add=True)

@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_simplejwt',
     'mail_templated',
+    'django_cleanup.apps.CleanupConfig',
     
     'account',
     'task',
@@ -183,3 +184,17 @@ SPECTACULAR_SETTINGS = {
     'REDOC_DIST': 'SIDECAR',
 
 }
+
+
+
+# Static files :
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+# Media Settings:
+MEDIA_URL = '/media/' # base url for accessing to media files
+
+MEDIA_ROOT = BASE_DIR / 'media' # path for saving media files on server
