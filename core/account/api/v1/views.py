@@ -95,3 +95,30 @@ class UserChangePassword(GenericAPIView):
         return Response({
             'detail': "Your password changed successfully"
         }, status=status.HTTP_200_OK)
+        
+
+class PsswordRecoveryView(GenericAPIView):
+    
+    def get(self, request, email, *args, **kwargs):
+        user = User.objects.get(email = email)
+        from_email = 'example@test.com'
+        if user:
+            random_password = User.objects.make_random_password()
+            user.set_password(random_password)
+            user.save()
+            message = EmailMessage(
+                'emails/account/password_recovery.tpl', 
+                {
+                    'password': random_password,
+                }, 
+                from_email,
+                to=[user.email])
+            
+            message.send()
+            return Response({
+                'detail' : 'the new password sent to your email' 
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response({
+                'detail' : 'this is not a vilid user' 
+            }, status=status.HTTP_400_BAD_REQUEST)
