@@ -95,7 +95,7 @@ class Task(models.Model):
 
 @receiver(post_save, sender=Task)
 def change_sub_proj(sender, instance, created, **kwargs):
-    sub_proj = SubProject.objects.get(title=instance.sub_project)
+    sub_proj = SubProject.objects.get(id=instance.sub_project.id)
     related_tasks = Task.objects.filter(sub_project=sub_proj)
     spending_time = 0
     status = "done"
@@ -114,7 +114,7 @@ def change_sub_proj(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=SubProject)
 def change_proj(sender, instance, created, **kwargs):
-    proj = Project.objects.get(title=instance.project)
+    proj = Project.objects.get(title=instance.project.title)
     related_tasks = SubProject.objects.filter(project=proj)
     spending_time = 0
     status = "done"
