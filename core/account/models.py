@@ -1,9 +1,14 @@
 from django.db import models
-from django.contrib.auth.models import BaseUserManager, AbstractBaseUser, PermissionsMixin
+from django.contrib.auth.models import (
+    BaseUserManager,
+    AbstractBaseUser,
+    PermissionsMixin,
+)
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
+
 
 class CustomUserManager(BaseUserManager):
     """
@@ -37,6 +42,7 @@ class CustomUserManager(BaseUserManager):
             raise ValueError(_("Superuser must have is_superuser=True."))
         return self.create_user(email, password, **extra_fields)
 
+
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name="email address",
@@ -49,10 +55,9 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False)
     created_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
-    
+
     objects = CustomUserManager()
 
-    
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
@@ -63,7 +68,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         "Does the user have a specific permission?"
         # Simplest possible answer: Yes, always
         return True
-    
+
 
 class Profile(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -79,7 +84,7 @@ class Profile(models.Model):
         return self.user.email
 
 
-@receiver(post_save, sender = User)
+@receiver(post_save, sender=User)
 def save_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user = instance)
+        Profile.objects.create(user=instance)

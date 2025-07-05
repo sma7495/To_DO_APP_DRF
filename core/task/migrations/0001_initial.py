@@ -54,7 +54,10 @@ class Migration(migrations.Migration):
                         to="account.profile",
                     ),
                 ),
-                ("related_user", models.ManyToManyField(to="account.profile")),
+                (
+                    "related_user",
+                    models.ManyToManyField(to="account.profile"),
+                ),
             ],
         ),
         migrations.CreateModel(
@@ -101,7 +104,8 @@ class Migration(migrations.Migration):
                 (
                     "project",
                     models.ForeignKey(
-                        on_delete=django.db.models.deletion.CASCADE, to="task.project"
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="task.project",
                     ),
                 ),
                 (

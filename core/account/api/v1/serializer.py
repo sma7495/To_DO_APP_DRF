@@ -1,9 +1,9 @@
 from rest_framework import serializers
 from django.contrib.auth.password_validation import validate_password
 from django.core import exceptions
-from django.utils.translation import gettext_lazy as _
+
+# from django.utils.translation import gettext_lazy as _
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework import serializers
 
 from ...models import User
 
@@ -30,7 +30,6 @@ class RegistrationSerializer(serializers.ModelSerializer):
         return User.objects.create_user(**validated_data)
 
 
-
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
         data = super().validate(attrs)
@@ -47,10 +46,9 @@ class ChangePasswordSerializer(serializers.Serializer):
     new_password1 = serializers.CharField(max_length=256)
 
     def validate(self, attrs):
-        data = super().validate(attrs)
         if attrs.get("new_password") != attrs.get("new_password1"):
             raise serializers.ValidationError({"detail": "password doesnt match!"})
-        
+
         if not self.context.get("request").user.check_password(attrs["old_password"]):
             raise serializers.ValidationError({"detail": "old password is incorect!"})
         try:

@@ -29,7 +29,8 @@ django-mail-templated
 
 # reformating:
 black
-
+flake8
+flake8-django
 
 # backgroun proccess
 celery
