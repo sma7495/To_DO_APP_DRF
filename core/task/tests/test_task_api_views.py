@@ -8,15 +8,21 @@ from account.models import Profile
 
 User = get_user_model()
 
+
 class TestTaskModels(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(email="test@ex.com", password="string1234")
         self.client = APIClient()
-        profile = Profile.objects.get(user = self.user)
+        profile = Profile.objects.get(user=self.user)
         self.profile = profile
-    
-    
+
     def test_task_list_unauthorized(self):
         url = reverse("task:api:task_list")
         response = self.client.get(url)
         self.assertEqual(response.status_code, 401)
+
+    def test_task_list_authorized(self):
+        self.client.force_authenticate(user=self.user)
+        url = reverse("task:api:task_list")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
